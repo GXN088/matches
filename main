@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+public class Main {
+    public static String validateInput(String text, String type) {
+        // Напишите свой код здесь
+        
+        // Guard clause: проверка на null
+        if (text == null) {
+            return "Invalid input";
+        }
+        
+        // Используем switch для выбора типа проверки
+        return switch (type) {
+            case "number" -> {
+                // Проверка: только цифры
+                boolean isValid = text.matches("\\d+");
+                yield isValid ? "Valid" : "Invalid";
+            }
+            case "word" -> {
+                // Проверка: только буквы
+                boolean isValid = text.matches("[a-zA-Z]+");
+                yield isValid ? "Valid" : "Invalid";
+            }
+            case "email" -> {
+                // Проверка: содержит @ и есть символы перед ним
+                int atIndex = text.indexOf("@");
+                boolean isValid = atIndex > 0 && atIndex < text.length() - 1;
+                yield isValid ? "Valid" : "Invalid";
+            }
+            case "phone" -> {
+                // Проверка: ровно 10 цифр
+                boolean isValid = text.matches("\\d{10}");
+                yield isValid ? "Valid" : "Invalid";
+            }
+            default -> "Invalid type";
+        };
+    }
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String text = scanner.nextLine();
+        String type = scanner.nextLine();
+        
+        if (text.equals("null")) text = null;
+        System.out.println(validateInput(text, type));
+    }
+}
